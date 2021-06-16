@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "52785647412",
+    "project_id": "alumni-meet",
+    "storage_bucket": "alumni-meet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52785647412:android:816190dc3013c77386df61",
+        "android_client_info": {
+          "package_name": "com.tarento.alumnimeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52785647412-22snmk77iuqtbflhi7abed31h3c5cme5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8ewcTmU5xNkAmL4VLfInc7pr64MddLto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52785647412-22snmk77iuqtbflhi7abed31h3c5cme5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
