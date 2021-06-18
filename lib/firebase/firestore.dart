@@ -44,6 +44,7 @@ Stream<QuerySnapshot> collectionQuerySnapShot() {
       .snapshots();
 }
 
+
 updateWorkAndEducationInfo(
     String uid, Map<String, dynamic> valueMap, bool isWork) {
   String field = isWork ? "work" : "education";
@@ -71,6 +72,15 @@ bool doesFieldExists(
     AsyncSnapshot<DocumentSnapshot> snapshot, String fieldName) {
   try {
     snapshot.data!.get(fieldName);
+    return true;
+  } on StateError catch (e) {
+    return false;
+  }
+}
+
+bool doesFieldExistsInDoc(DocumentSnapshot snapshot, String fieldName) {
+  try {
+    snapshot.get(fieldName);
     return true;
   } on StateError catch (e) {
     return false;

@@ -1,4 +1,5 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
+import 'package:alumnimeet/models/user.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -45,21 +46,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     case ConnectionState.waiting:
                       return new Text('Loading...');
                     default:
-                      bool isWork = FireStore.doesFieldExists(snapshot, 'work');
-                      bool isEducation =
-                          FireStore.doesFieldExists(snapshot, 'education');
+                      User user = User.fromAsyncDocumentSnapShot(snapshot);
                       return Column(
                         children: [
                           ProfileHeaderCard(
-                            email: snapshot.data!.get('email'),
-                            phone: snapshot.data!.get('phoneNumber'),
-                            name: snapshot.data!.get('name'),
-                            photoURL: snapshot.data?.get('profilePic') != null
-                                ? snapshot.data?.get('profilePic')
-                                : null,
-                            url: FireStore.doesFieldExists(snapshot, 'link')
-                                ? snapshot.data!.get('link')
-                                : null,
+                            email: user.email,
+                            phone: user.phoneNumber,
+                            name: user.name,
+                            photoURL: user.profilePic,
+                            url: user.link,
                             isCurrentUser: _isCurrentUser,
                             userId: _userid,
                           ),
@@ -67,76 +62,36 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               userId: _userid,
                               isProfessional: true,
                               title: "Professional Details",
-                              org:
-                                  isWork ? snapshot.data!['work']['org'] : null,
-                              city: isWork
-                                  ? snapshot.data!['work']['city']
-                                  : null,
-                              designation: isWork
-                                  ? snapshot.data!['work']['job_title']
-                                  : null,
-                              start: isWork
-                                  ? DateFormat("MMMM y").format(
-                                      snapshot.data!['work']['from'].toDate())
-                                  : null,
-                              complete: isWork
-                                  ? snapshot.data!['work']['isPresent']
-                                      ? null
-                                      : DateFormat("MMMM y").format(
-                                          snapshot.data?['work']['to'].toDate())
-                                  : null,
-                              isPresent: isWork
-                                  ? snapshot.data!['work']['isPresent']
+                              org: user.work?.org,
+                              city: user.work?.city,
+                              designation: user.work?.jobTitle,
+                              start: user.work?.from,
+                              complete: user.work?.to,
+                              isPresent: user.work?.isPresent != null
+                                  ? user.work!.isPresent
                                   : true,
                               isCurrentUser: _isCurrentUser),
                           ProfessionalDetails(
                             userId: _userid,
                             isProfessional: false,
                             title: "Education Details",
-                            org: isEducation
-                                ? snapshot.data!['education']['org']
-                                : null,
-                            city: isEducation
-                                ? snapshot.data!['education']['city']
-                                : null,
-                            designation: isEducation
-                                ? snapshot.data!['education']['course']
-                                : null,
-                            start: isEducation
-                                ? DateFormat("MMMM y").format(snapshot
-                                    .data!['education']['from']
-                                    .toDate())
-                                : null,
-                            complete: isEducation
-                                ? snapshot.data!['education']['isPresent']
-                                    ? null
-                                    : DateFormat("MMMM y").format(snapshot
-                                        .data!['education']['to']
-                                        .toDate())
-                                : null,
-                            isPresent: isEducation
-                                ? snapshot.data!['education']['isPresent']
+                            org: user.education?.org,
+                            city: user.education?.city,
+                            designation: user.education?.course,
+                            start: user.education?.from,
+                            complete: user.education?.to,
+                            isPresent: user.education?.isPresent != null
+                                ? user.education!.isPresent
                                 : true,
                             isCurrentUser: _isCurrentUser,
                           ),
                           PersonalDetails(
                               userId: _userid,
                               isCurrentUser: _isCurrentUser,
-                              birthday: FireStore.doesFieldExists(
-                                      snapshot, 'dob')
-                                  ? DateFormat("dd-MM-yyyy")
-                                      .format(snapshot.data!['dob'].toDate())
-                                  : null,
-                              city: FireStore.doesFieldExists(
-                                      snapshot, 'hometown')
-                                  ? snapshot.data!.get('hometown')
-                                  : null,
-                              lat: FireStore.doesFieldExists(snapshot, 'lat')
-                                  ? snapshot.data!.get('lat')
-                                  : null,
-                              lng: FireStore.doesFieldExists(snapshot, 'lng')
-                                  ? snapshot.data!.get('lng')
-                                  : null)
+                              birthday: user.dob,
+                              city: user.homeTown,
+                              lat: user.lat,
+                              lng: user.lng)
                         ],
                       );
                   }
