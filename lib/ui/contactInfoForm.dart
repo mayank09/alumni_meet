@@ -9,7 +9,8 @@ class ContactInfoForm extends StatefulWidget {
       required this.name,
       required this.email,
       this.phone,
-      this.link, required this.userId})
+      this.link,
+      required this.userId})
       : super(key: key);
 
   final String name, email, userId;
@@ -45,75 +46,80 @@ class _ContactInfoFormState extends State<ContactInfoForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Contact Info")),
-      body: Center(
-        child: SingleChildScrollView(
-          child: FormBuilder(
-            key: _formKey,
-            child: Column(
-              children: [
-                FormTextField(
-                    name: "name",
-                    hint: "John Doe",
-                    label: "Full Name",
-                    inputType: TextInputType.name,
-                    focusNode: _nameFocusNode,
-                    validators: [
-                      FormBuilderValidators.required(context,
-                          errorText: "Please enter your full name")
-                    ],
-                    initialValue: _name),
-                FormTextField(
-                    name: "email",
-                    hint: "john.doe@gmail.com",
-                    label: "Email",
-                    inputType: TextInputType.name,
-                    focusNode: _emailFocusNode,
-                    validators: [
-                      FormBuilderValidators.required(context,
-                          errorText: "Please enter your full name"),
-                    ],
-                    initialValue: _email),
-                PhoneNumberField(
-                  focusNode: _phoneFocusNode,
-                  name: "phoneNumber",
-                  initialValue: _phone,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FormTextField(
+                        name: "name",
+                        hint: "John Doe",
+                        label: "Full Name",
+                        inputType: TextInputType.name,
+                        focusNode: _nameFocusNode,
+                        validators: [
+                          FormBuilderValidators.required(context,
+                              errorText: "Please enter your full name")
+                        ],
+                        initialValue: _name),
+                    FormTextField(
+                        name: "email",
+                        hint: "john.doe@gmail.com",
+                        label: "Email",
+                        inputType: TextInputType.name,
+                        focusNode: _emailFocusNode,
+                        validators: [
+                          FormBuilderValidators.required(context,
+                              errorText: "Please enter your full name"),
+                        ],
+                        initialValue: _email),
+                    PhoneNumberField(
+                      focusNode: _phoneFocusNode,
+                      name: "phoneNumber",
+                      initialValue: _phone,
+                    ),
+                    FormTextField(
+                        name: "link",
+                        hint: "www.linkedin/joe.com",
+                        label: "Profile Link",
+                        inputType: TextInputType.name,
+                        focusNode: _linkFocusNode,
+                        validators: [
+                          FormBuilderValidators.url(context,
+                              errorText: "Please enter a valid url")
+                        ],
+                        initialValue: _link),
+                  ],
                 ),
-                FormTextField(
-                    name: "link",
-                    hint: "www.linkedin/joe.com",
-                    label: "Profile Link",
-                    inputType: TextInputType.name,
-                    focusNode: _linkFocusNode,
-                    validators: [
-                      FormBuilderValidators.url(context,
-                          errorText: "Please enter a valid url")
-                    ],
-                    initialValue: _link),
-                _isProcessing
-                    ? CircularProgressIndicator()
-                    : SubmitButton(
-                        title: "Submit",
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              _isProcessing = true;
-                            });
-                            _formKey.currentState!.save();
-                            print(_formKey.currentState!.value);
-                            updateContactAndPersonalInfo(_userId, _formKey.currentState!.value);
-                            setState(() {
-                              _isProcessing = false;
-                            });
-                            Navigator.pop(context);
-                          } else {
-                            print("validation failed");
-                          }
-                        })
-              ],
+              ),
             ),
           ),
-        ),
+          _isProcessing
+              ? CircularProgressIndicator()
+              : SubmitButton(
+              title: "Submit",
+              onPressed: () async {
+                FocusScope.of(context).unfocus();
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    _isProcessing = true;
+                  });
+                  _formKey.currentState!.save();
+                  print(_formKey.currentState!.value);
+                  updateContactAndPersonalInfo(
+                      _userId, _formKey.currentState!.value);
+                  setState(() {
+                    _isProcessing = false;
+                  });
+                  Navigator.pop(context);
+                } else {
+                  print("validation failed");
+                }
+              })
+        ],
       ),
     );
   }

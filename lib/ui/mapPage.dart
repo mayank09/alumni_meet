@@ -1,6 +1,7 @@
 import 'package:alumnimeet/location/location.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  late String address;
+  String? address;
   late final double _lat, _lng;
 
   @override
@@ -25,6 +26,7 @@ class _MapPageState extends State<MapPage> {
     _lat = widget.lat;
     _lng = widget.lng;
     }
+
 
 
   @override
@@ -60,11 +62,17 @@ class _MapPageState extends State<MapPage> {
   }
 
   Set<Marker> _createMarker() {
+    getAddressFromLatLng(_lat, _lng).then((value){
+      setState(() {
+        address = value;
+      });
+    });
     return {
       Marker(
         markerId: MarkerId("marker_1"),
         position: LatLng(_lat, _lng),
-       // infoWindow: InfoWindow(title: address)
+       infoWindow: InfoWindow(title: "Address", snippet: address)
+
       ),
     };
   }
