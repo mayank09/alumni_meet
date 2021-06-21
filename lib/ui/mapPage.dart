@@ -1,4 +1,5 @@
 import 'package:alumnimeet/location/location.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,7 +33,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("View Location on Map")),
+      appBar: AppBar(title: Text(MAP_TITLE)),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -50,7 +51,7 @@ class _MapPageState extends State<MapPage> {
               margin: EdgeInsets.all(4),
               height: 50,
               child: ElevatedButton(
-                  child: Text("Done"),
+                  child: Text(DONE),
                   onPressed: () {
                     Navigator.pop(context);
                   }),
@@ -71,7 +72,7 @@ class _MapPageState extends State<MapPage> {
       Marker(
         markerId: MarkerId("marker_1"),
         position: LatLng(_lat, _lng),
-       infoWindow: InfoWindow(title: "Address", snippet: address)
+       infoWindow: InfoWindow(title: ADDRESS, snippet: address)
 
       ),
     };

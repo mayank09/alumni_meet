@@ -1,5 +1,6 @@
 import 'package:alumnimeet/firebase/fire_auth.dart' as FireAuth;
 import 'package:alumnimeet/ui/homePage.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -37,46 +38,46 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FormTextField(
-                      name: "fullname",
-                      hint: "John Doe",
-                      label: "Full Name",
+                      name: NAME,
+                      hint: NAME_HINT,
+                      label: NAME_LABEL,
                       inputType: TextInputType.name,
                       focusNode: _nameFocusNode,
                       validators: [
                         FormBuilderValidators.required(context,
-                            errorText: "Please enter your full name"),
+                            errorText: NAME_ERR),
                       ]),
                   FormTextField(
-                      name: "email",
-                      hint: "john.doe@gmail.com",
-                      label: "Email",
+                      name: EMAIL_ID,
+                      hint: EMAIL_HINT,
+                      label: EMAIL_LABEL,
                       inputType: TextInputType.emailAddress,
                       focusNode: _emailFocusNode,
                       validators: [
                         FormBuilderValidators.required(context,
-                            errorText: "Email address can't be left blank"),
+                            errorText: EMAIL_ERR),
                         FormBuilderValidators.email(context,
-                            errorText: "Not a valid Email")
+                            errorText: EMAIL_VALID_ERR)
                       ]),
                   FormTextField(
-                      name: "password",
-                      label: "Password",
+                      name: PASS_FIELD,
+                      label: PASS_LABEL,
                       inputType: TextInputType.text,
                       focusNode: _passwordFocusNode,
                       obscureText: true,
                       validators: [
                         FormBuilderValidators.required(context,
-                            errorText: "Password can't be left blank"),
+                            errorText: PASS_ERR),
                       ]),
                   PhoneNumberField(
-                    name: 'phone_number',
+                    name: PHONE,
                     focusNode: _phoneFocusNode,
                     textInputAction: TextInputAction.done,
                   ),
                   _isProcessing
                       ? CircularProgressIndicator()
                       : SubmitButton(
-                          title: "Register",
+                          title: REGISTER,
                           onPressed: () async {
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState!.validate()) {
@@ -89,13 +90,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                   await FireAuth.registerUsingEmailPassword(
                                       context: context,
                                       name: _formKey.currentState!
-                                          .fields['fullname']!.value,
+                                          .fields[NAME]!.value,
                                       email: _formKey
-                                          .currentState!.fields['email']!.value,
+                                          .currentState!.fields[EMAIL_ID]!.value,
                                       password: _formKey.currentState!
-                                          .fields['password']!.value,
+                                          .fields[PASS_FIELD]!.value,
                                       phoneNumber: _formKey.currentState!
-                                          .fields['phone_number']!.value);
+                                          .fields[PHONE]!.value);
                               setState(() {
                                 _isProcessing = false;
                               });
@@ -113,8 +114,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           }),
                   CreateAccountLabel(
-                      question: "Already have account ?",
-                      feature: "Login",
+                      question: ALREADY_HAVE_ACC,
+                      feature: LOGIN,
                       onTap: () {
                         Navigator.pop(context);
                       })

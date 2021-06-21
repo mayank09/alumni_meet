@@ -1,4 +1,5 @@
 import 'package:alumnimeet/firebase/firestore.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -45,7 +46,7 @@ class _ContactInfoFormState extends State<ContactInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Contact Info")),
+      appBar: AppBar(title: Text(CONTACT_INFO)),
       body: Column(
         children: [
           Expanded(
@@ -55,41 +56,42 @@ class _ContactInfoFormState extends State<ContactInfoForm> {
                 child: Column(
                   children: [
                     FormTextField(
-                        name: "name",
-                        hint: "John Doe",
-                        label: "Full Name",
+                        name: NAME,
+                        hint: NAME_HINT,
+                        label: NAME_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _nameFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: "Please enter your full name")
+                              errorText: NAME_ERR)
                         ],
                         initialValue: _name),
                     FormTextField(
-                        name: "email",
-                        hint: "john.doe@gmail.com",
-                        label: "Email",
+                        name: EMAIL_ID,
+                        hint: EMAIL_HINT,
+                        label: EMAIL_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _emailFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: "Please enter your full name"),
+                              errorText: EMAIL_ERR),
+                          FormBuilderValidators.email(context, errorText: EMAIL_VALID_ERR)
                         ],
                         initialValue: _email),
                     PhoneNumberField(
                       focusNode: _phoneFocusNode,
-                      name: "phoneNumber",
+                      name: PHONE,
                       initialValue: _phone,
                     ),
                     FormTextField(
-                        name: "link",
-                        hint: "www.linkedin/joe.com",
-                        label: "Profile Link",
+                        name: LINK,
+                        hint: LINK_HINT,
+                        label: LINK_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _linkFocusNode,
                         validators: [
                           FormBuilderValidators.url(context,
-                              errorText: "Please enter a valid url")
+                              errorText: LINK_VALID_ERR)
                         ],
                         initialValue: _link),
                   ],
@@ -100,7 +102,7 @@ class _ContactInfoFormState extends State<ContactInfoForm> {
           _isProcessing
               ? CircularProgressIndicator()
               : SubmitButton(
-              title: "Submit",
+              title: SUBMIT,
               onPressed: () async {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState!.validate()) {

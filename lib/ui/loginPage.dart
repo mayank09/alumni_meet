@@ -1,6 +1,7 @@
 import 'package:alumnimeet/firebase/fire_auth.dart'as FireAuth;
 import 'package:alumnimeet/ui/homePage.dart';
 import 'package:alumnimeet/ui/registerPage.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,36 +41,35 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FormTextField(
-                                  name: "email",
-                                  hint: "joe,doe@gmmail.com",
-                                  label: "Email",
+                                  name: EMAIL_ID,
+                                  hint: EMAIL_HINT,
+                                  label: EMAIL_ID.toUpperCase(),
                                   inputType: TextInputType.emailAddress,
                                   focusNode: _emailFocusNode,
                                   validators: [
                                     FormBuilderValidators.required(context,
                                         errorText:
-                                            "Email address can't be left blank"),
+                                        EMAIL_ERR),
                                     FormBuilderValidators.email(context,
-                                        errorText: "Not a valid Email"),
+                                        errorText: EMAIL_VALID_ERR),
                                   ]),
                               FormTextField(
-                                  name: "password",
-                                  label: "Password",
+                                  name: PASS_FIELD,
+                                  label: PASS_FIELD.toUpperCase(),
                                   inputType: TextInputType.text,
                                   textInputAction: TextInputAction.done,
                                   focusNode: _passwordFocusNode,
                                   obscureText: true,
                                   validators: [
                                     FormBuilderValidators.required(context,
-                                        errorText:
-                                            "Password can't be left blank"),
+                                        errorText: PASS_ERR),
                                   ]),
                               _isProcessing
                                   ? CircularProgressIndicator()
                                   : Column(
                                       children: [
                                         SubmitButton(
-                                            title: "Login",
+                                            title: LOGIN,
                                             onPressed: () async {
                                               FocusScope.of(context).unfocus();
                                               if (_formKey.currentState!
@@ -84,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                                                     await FireAuth.signInUsingEmailPassword(
                                                         email: _formKey
                                                             .currentState!
-                                                            .fields['email']!
+                                                            .fields[EMAIL_ID]!
                                                             .value,
                                                         password: _formKey
                                                             .currentState!
-                                                            .fields['password']!
+                                                            .fields[PASS_FIELD]!
                                                             .value,
                                                         context: context);
                                                 setState(() {
@@ -136,8 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         CreateAccountLabel(
                                             question:
-                                                'Don\'t have an account ?',
-                                            feature: 'Register',
+                                            DONT_HAVE_ACC,
+                                            feature: REGISTER,
                                             onTap: () {
                                               Navigator.push(
                                                 context,

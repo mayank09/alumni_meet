@@ -1,3 +1,4 @@
+import 'package:alumnimeet/util/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,12 @@ Future<void> addUserToCollection(
 ) async {
   //now below I am getting an instance of firebase firestore then getting the user collection
   //now I am creating the document if not already exist and setting the data.
-  FirebaseFirestore.instance.collection('users').doc(user?.uid).set({
-    'userid': user?.uid,
-    'email': user?.email,
-    'name': user?.displayName,
-    'profilePic': user?.photoURL,
-    'phoneNumber': phoneNumber,
+  FirebaseFirestore.instance.collection(USER_COLLECTION).doc(user?.uid).set({
+    USER_ID: user?.uid,
+    EMAIL_ID : user?.email,
+    NAME : user?.displayName,
+    PROFILE_PIC: user?.photoURL,
+    PHONE : phoneNumber,
   },SetOptions(merge: true)).whenComplete(() {
     print("User added successfully");
   }).catchError((e) => print(e));
@@ -26,45 +27,45 @@ Future<void> addUserToCollection(
 Future<QuerySnapshot<Map<String, dynamic>>> getAllUsers(String uid) async {
   QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
       .instance
-      .collection('users')
-      .orderBy("name")
+      .collection(USER_COLLECTION)
+      .orderBy(NAME)
       .where('uid', isNotEqualTo: uid)
       .get();
   return snapshot;
 }
 
 Stream<DocumentSnapshot> documentSnapShot(String uid) {
-  return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
+  return FirebaseFirestore.instance.collection(USER_COLLECTION).doc(uid).snapshots();
 }
 
 Stream<QuerySnapshot> collectionQuerySnapShot() {
   return FirebaseFirestore.instance
-      .collection("users")
-      .orderBy("name")
+      .collection(USER_COLLECTION)
+      .orderBy(NAME)
       .snapshots();
 }
 
 
 updateWorkAndEducationInfo(
     String uid, Map<String, dynamic> valueMap, bool isWork) {
-  String field = isWork ? "work" : "education";
+  String field = isWork ? WORK : EDU;
   FirebaseFirestore.instance
-      .collection("users")
+      .collection(USER_COLLECTION)
       .doc(uid)
       .set({field: valueMap}, SetOptions(merge: true));
 }
 
 updateContactAndPersonalInfo(String uid, Map<String, dynamic> valueMap) {
   FirebaseFirestore.instance
-      .collection("users")
+      .collection(USER_COLLECTION)
       .doc(uid)
       .set(valueMap, SetOptions(merge: true));
 }
 
 updateUserCurrentLocation(String uid, Position position) {
-  FirebaseFirestore.instance.collection("users").doc(uid).set({
-    "lat": position.latitude,
-    "lng": position.longitude,
+  FirebaseFirestore.instance.collection(USER_COLLECTION).doc(uid).set({
+    LAT: position.latitude,
+    LNG: position.longitude,
   }, SetOptions(merge: true));
 }
 

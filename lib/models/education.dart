@@ -1,3 +1,4 @@
+import 'package:alumnimeet/util/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -16,29 +17,29 @@ class Education {
   //create Education model object from fireStore document snapshot
   factory Education.fromSnapshot(DocumentSnapshot snapshot) {
     return Education(
-        snapshot['education']['org'],
-        snapshot['education']['city'],
-        snapshot['education']['course'],
-        DateFormat("MMMM y").format(snapshot['education']['from']!.toDate()),
-        snapshot['education']['isPresent']
+        snapshot[EDU][ORG],
+        snapshot[EDU][CITY],
+        snapshot[EDU][COURSE],
+        DateFormat(WORK_FORMAT).format(snapshot[EDU][FROM]!.toDate()),
+        snapshot[EDU][IS_PRESENT]
             ? null
-            : DateFormat("MMMM y").format(snapshot['education']['to'].toDate()),
-        snapshot['education']['isPresent'] ?? true);
+            : DateFormat(WORK_FORMAT).format(snapshot[EDU][TO].toDate()),
+        snapshot[EDU][IS_PRESENT] ?? true);
   }
 
   factory Education.fromAsyncSnapshot(
       AsyncSnapshot<DocumentSnapshot> snapshot) {
     return Education(
-        snapshot.data!['education']['org'],
-        snapshot.data!['education']['city'],
-        snapshot.data!['education']['course'],
-        DateFormat("MMMM y")
-            .format(snapshot.data!['education']['from']!.toDate()),
-        snapshot.data!['education']['isPresent']
+        snapshot.data![EDU][ORG],
+        snapshot.data![EDU][CITY],
+        snapshot.data![EDU][COURSE],
+        DateFormat(WORK_FORMAT)
+            .format(snapshot.data![EDU][FROM]!.toDate()),
+        snapshot.data![EDU][IS_PRESENT]
             ? null
-            : DateFormat("MMMM y")
-                .format(snapshot.data!['education']['to'].toDate()),
-        snapshot.data!['education']['isPresent'] ?? true);
+            : DateFormat(WORK_FORMAT)
+                .format(snapshot.data![EDU][TO].toDate()),
+        snapshot.data![EDU][IS_PRESENT] ?? true);
   }
 
   // formatting for upload to Firebase when creating the education section

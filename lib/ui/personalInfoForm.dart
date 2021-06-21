@@ -1,4 +1,5 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -39,7 +40,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Personal Info")),
+      appBar: AppBar(title: Text(PERSONAL_INFO)),
       body: Column(
         children: [
           Expanded(
@@ -50,25 +51,25 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     DatePickerForm(
-                      name: "dob",
-                      label: "Date of Birth",
-                      format: "dd-MM-yyyy",
+                      name: DOB,
+                      label: DOB_LABEL,
+                      format: BIRTHDAY_FORMAT,
                       mode: DatePickerMode.day,
                       focusNode: _dobFocusNode,
                       textInputAction: TextInputAction.next,
                       initialValue: _dob,
                       validators: FormBuilderValidators.required(context,
-                          errorText: "Please fill Date of Birth"),
+                          errorText: DOB_ERR),
                     ),
                     FormTextField(
-                        name: "hometown",
+                        name: HOMETOWN,
                         hint: "",
-                        label: "HomeTown",
+                        label: HT_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _cityFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: "Please enter your hometown")
+                              errorText: HT_ERR)
                         ],
                         initialValue: _homeTown),
 
@@ -80,7 +81,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           _isProcessing
               ? CircularProgressIndicator()
               : SubmitButton(
-              title: "Submit",
+              title: SUBMIT,
               onPressed: () async {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState!.validate()) {

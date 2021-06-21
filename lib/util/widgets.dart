@@ -3,6 +3,7 @@ import 'package:alumnimeet/ui/contactInfoForm.dart';
 import 'package:alumnimeet/ui/mapPage.dart';
 import 'package:alumnimeet/ui/personalInfoForm.dart';
 import 'package:alumnimeet/ui/workInfoForm.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -143,7 +144,7 @@ class DatePickerFeild extends StatelessWidget {
       child: FormBuilderDateRangePicker(
         name: 'date_range',
         firstDate: DateTime(1900),
-        lastDate: DateTime(2022),
+        lastDate: DateTime(DateTime.now().month + 1),
         initialEntryMode: DatePickerEntryMode.inputOnly,
         format: DateFormat("MMMM-yyyy"),
         decoration: InputDecoration(
@@ -226,8 +227,8 @@ class FormCheckBox extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: 8, top: 0, bottom: 0),
       child: FormBuilderCheckbox(
-          name: "isPresent",
-          title: Text("Present"),
+          name: IS_PRESENT,
+          title: Text(PRESENT_LABEL),
           initialValue: initialValue,
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: onChanged,
@@ -694,15 +695,16 @@ class PersonalDetails extends StatelessWidget {
                           : TextButton(
                               onPressed: () {
                                 lat != null && lng != null
-                                ?Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MapPage(
-                                              userId: userId,
-                                              lng: lng!,
-                                              lat: lat!,
-                                            )))
-                                    : showSnackBar(context, "No Location found for this user");
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MapPage(
+                                                  userId: userId,
+                                                  lng: lng!,
+                                                  lat: lat!,
+                                                )))
+                                    : showSnackBar(context,
+                                        "No Location found for this user");
                               },
                               child: Text("View on Map",
                                   style: TextStyle(color: Colors.blue)))

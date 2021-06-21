@@ -1,5 +1,6 @@
 import 'package:alumnimeet/firebase/firestore.dart';
 import 'package:alumnimeet/ui/homePage.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,12 +44,10 @@ Future<User?> registerUsingEmailPassword(
 
     addUserToCollection(user, phoneNumber);
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      showSnackBar(context, 'The password provided is too weak.');
-      print('The password provided is too weak.');
-    } else if (e.code == 'email-already-in-use') {
-      showSnackBar(context, 'The account already exists for that email.');
-      print('The account already exists for that email.');
+    if (e.code == WEAK_PASSWORD_ERR) {
+      showSnackBar(context, WEAK_PASSWORD_MSG);
+    } else if (e.code == EMAIL_IN_USE_ERR) {
+      showSnackBar(context, EMAIL_IN_USE_MSG);
     }
   } catch (e) {
     print(e);
@@ -73,12 +72,10 @@ Future<User?> signInUsingEmailPassword({
     );
     user = userCredential.user;
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-      showSnackBar(context, 'No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided.');
-      showSnackBar(context, 'Wrong password provided.');
+    if (e.code == USER_NOT_FOUND_ERR) {
+      showSnackBar(context, USER_NOT_FOUND_MSG);
+    } else if (e.code == PASSWORD_ERR) {
+      showSnackBar(context, PASSWORD_MSG);
     }
   }
 
@@ -127,12 +124,12 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
         }
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'account-exists-with-different-credential') {
+      if (e.code == ACCOUNT_EXISTS_ERR) {
         showSnackBar(
-            context, 'Account already exists with a different credential');
+            context, ACCOUNT_EXISTS_MSG);
         // handle the error here
-      } else if (e.code == 'invalid-credential') {
-        showSnackBar(context, 'Invalid credential');
+      } else if (e.code == INVALID_CRED_ERR) {
+        showSnackBar(context, INVALID_CRED_MSG);
         // handle the error here
       }
     } catch (e) {

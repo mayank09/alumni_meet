@@ -1,10 +1,10 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
 import 'package:alumnimeet/models/user.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class UserProfilePage extends StatefulWidget {
   final String userid;
@@ -32,7 +32,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: !_isCurrentUser ? AppBar(title: Text("Alumni Profile")) : null,
+        appBar: !_isCurrentUser ? AppBar(title: Text(ALUM_LABEL)) : null,
         body: SingleChildScrollView(
           child: Container(
               padding: const EdgeInsets.all(5.0),
@@ -61,7 +61,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ProfessionalDetails(
                               userId: _userid,
                               isProfessional: true,
-                              title: "Professional Details",
+                              title: PRO_DETAILS,
                               org: user.work?.org,
                               city: user.work?.city,
                               designation: user.work?.jobTitle,
@@ -74,7 +74,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ProfessionalDetails(
                             userId: _userid,
                             isProfessional: false,
-                            title: "Education Details",
+                            title: EDU_DETAILS,
                             org: user.education?.org,
                             city: user.education?.city,
                             designation: user.education?.course,

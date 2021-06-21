@@ -1,4 +1,5 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -56,7 +57,7 @@ class _WorkInfoFormState extends State<WorkInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Contact Info")),
+      appBar: AppBar(title: Text(WORK_INFO)),
       body: Column(
         children: [
           Expanded(
@@ -67,56 +68,56 @@ class _WorkInfoFormState extends State<WorkInfoForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FormTextField(
-                        name: "org",
+                        name: ORG,
                         hint: "",
-                        label: _isProfessional?"Organization Name": "Institution Name",
+                        label: _isProfessional?ORG_LABEL: INST_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _orgFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: "Please enter your Organization name")
+                              errorText: ORG_ERR)
                         ],
                         initialValue: _org),
                     FormTextField(
-                        name: "city",
+                        name: CITY,
                         hint: "",
-                        label: "City Name",
+                        label: CITY_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _cityFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: "Please enter your city name")
+                              errorText: CITY_ERR)
                         ],
                         initialValue: _city),
                     FormTextField(
-                        name: _isProfessional?"job_title":"course",
+                        name: _isProfessional?JOB_TITLE:COURSE,
                         hint: "",
-                        label: _isProfessional?"Designation":"Course with Specialization",
+                        label: _isProfessional?JOB_LABEL:COURSE_LABEL,
                         inputType: TextInputType.name,
                         focusNode: _titleFocusNode,
                         validators: [
                           FormBuilderValidators.required(context,
-                              errorText: _isProfessional?"Please enter your Designation": "Please enter your Course name")
+                              errorText: _isProfessional?JOB_ERR: COURSE_ERR)
                         ],
                         initialValue: _title),
                     //Spacer(),
                     DatePickerForm(
-                      name: "from",
-                      label: "From",
-                      format: "MMMM y",
+                      name: FROM,
+                      label: FROM_LABEL,
+                      format: WORK_FORMAT,
                       mode: DatePickerMode.year,
                       focusNode: _startFocusNode,
                       textInputAction: TextInputAction.next,
                       initialValue: _start,
                       validators: FormBuilderValidators.required(context,
-                          errorText: "Please fill a Starting date"),
+                          errorText: START_DATE_ERR),
                     ),
                     FormCheckBox(
                       initialValue: _isPresent,
                       focusNode: _isPresentFocusNode,
                       onChanged: (bool? val) {
                         _formKey.currentState!.save();
-                        val = _formKey.currentState!.fields['isPresent']!.value;
+                        val = _formKey.currentState!.fields[IS_PRESENT]!.value;
                         setState(() {
                           _isPresent = val!;
                         });
@@ -125,18 +126,18 @@ class _WorkInfoFormState extends State<WorkInfoForm> {
                     _isPresent!
                         ? Container()
                         : DatePickerForm(
-                            name: "to",
-                            label: "To",
-                            format: "MMMM y",
+                            name: TO,
+                            label: TO_LABEL,
+                            format: WORK_FORMAT,
                             mode: DatePickerMode.year,
                             focusNode: _endFocusNode,
-                            firstDate: _formKey.currentState?.fields['from']?.value,
+                            firstDate: _formKey.currentState?.fields[FROM]?.value,
                             textInputAction: TextInputAction.done,
                             initialValue: _isPresent! ? null : _end,
                             validators: _isPresent!
                                 ? null
                                 : FormBuilderValidators.required(context,
-                                    errorText: "Please fill a Completion date")
+                                    errorText: COMPLETE_DATE_ERR)
 /*                      selectableDayPredicate: (DateTime day) {
                               String s = _formKey.currentState!.fields['from']!.value;
                               DateFormat f = DateFormat("MMMM y");
@@ -155,7 +156,7 @@ class _WorkInfoFormState extends State<WorkInfoForm> {
           _isProcessing
               ? CircularProgressIndicator()
               : SubmitButton(
-              title: "Submit",
+              title: SUBMIT,
               onPressed: () async {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState!.validate()) {

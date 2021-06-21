@@ -1,6 +1,7 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
 import 'package:alumnimeet/models/education.dart';
 import 'package:alumnimeet/models/work.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -35,30 +36,30 @@ class User {
 
   factory User.fromDocumentSnapShot(DocumentSnapshot snapshot) {
     return User(
-        snapshot['userid'],
-        snapshot['name'],
-        snapshot['email'],
-        snapshot['phoneNumber'] ?? null,
-        snapshot['profilePic'] ?? null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'link')
-            ? snapshot['link']
+        snapshot[USER_ID],
+        snapshot[NAME],
+        snapshot[EMAIL_ID],
+        snapshot[PHONE] ?? null,
+        snapshot[PROFILE_PIC] ?? null,
+        FireStore.doesFieldExistsInDoc(snapshot, LINK)
+            ? snapshot[LINK]
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'dob')
-            ? DateFormat("dd-MM-yyyy").format(snapshot['dob'].toDate())
+        FireStore.doesFieldExistsInDoc(snapshot, DOB)
+            ? DateFormat(BIRTHDAY_FORMAT).format(snapshot[DOB].toDate())
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'hometown')
-            ? snapshot['hometown']
+        FireStore.doesFieldExistsInDoc(snapshot, HOMETOWN)
+            ? snapshot[HOMETOWN]
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'lat')
-            ? snapshot['lat']
+        FireStore.doesFieldExistsInDoc(snapshot, LAT)
+            ? snapshot[LAT]
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'lng')
-            ? snapshot['lng']
+        FireStore.doesFieldExistsInDoc(snapshot, LNG)
+            ? snapshot[LNG]
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'work')
+        FireStore.doesFieldExistsInDoc(snapshot, WORK)
             ? Work.fromSnapshot(snapshot)
             : null,
-        FireStore.doesFieldExistsInDoc(snapshot, 'education')
+        FireStore.doesFieldExistsInDoc(snapshot, EDU)
             ? Education.fromSnapshot(snapshot)
             : null);
   }
@@ -66,30 +67,30 @@ class User {
   factory User.fromAsyncDocumentSnapShot(
       AsyncSnapshot<DocumentSnapshot> snapshot) {
     return User(
-        snapshot.data!.get('userid'),
-        snapshot.data!.get('name'),
-        snapshot.data!.get('email') ?? null,
-        snapshot.data!.get('phoneNumber') ?? null,
-        snapshot.data!['profilePic'] ?? null,
-        FireStore.doesFieldExists(snapshot, 'link')
-            ? snapshot.data!['link']
+        snapshot.data!.get(USER_ID),
+        snapshot.data!.get(NAME),
+        snapshot.data!.get(EMAIL_ID) ?? null,
+        snapshot.data!.get(PHONE) ?? null,
+        snapshot.data![PROFILE_PIC] ?? null,
+        FireStore.doesFieldExists(snapshot, LINK)
+            ? snapshot.data![LINK]
             : null,
-        FireStore.doesFieldExists(snapshot, 'dob')
-            ? DateFormat("dd-MM-yyyy").format(snapshot.data!['dob'].toDate())
+        FireStore.doesFieldExists(snapshot, DOB)
+            ? DateFormat(BIRTHDAY_FORMAT).format(snapshot.data![DOB].toDate())
             : null,
-        FireStore.doesFieldExists(snapshot, 'hometown')
-            ? snapshot.data!['hometown']
+        FireStore.doesFieldExists(snapshot, HOMETOWN)
+            ? snapshot.data![HOMETOWN]
             : null,
-        FireStore.doesFieldExists(snapshot, 'lat')
-            ? snapshot.data!['lat']
+        FireStore.doesFieldExists(snapshot,LAT)
+            ? snapshot.data![LAT]
             : null,
-        FireStore.doesFieldExists(snapshot, 'lng')
-            ? snapshot.data!['lng']
+        FireStore.doesFieldExists(snapshot, LNG)
+            ? snapshot.data![LNG]
             : null,
-        FireStore.doesFieldExists(snapshot, 'work')
+        FireStore.doesFieldExists(snapshot, WORK)
             ? Work.fromAsyncSnapshot(snapshot)
             : null,
-        FireStore.doesFieldExists(snapshot, 'education')
+        FireStore.doesFieldExists(snapshot, EDU)
             ? Education.fromAsyncSnapshot(snapshot)
             : null);
   }

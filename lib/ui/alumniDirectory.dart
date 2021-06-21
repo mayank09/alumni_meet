@@ -1,5 +1,6 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
 import 'package:alumnimeet/models/user.dart' as UserModel;
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/customCard.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -74,8 +75,8 @@ class _AlumniDirectoryPageState extends State<AlumniDirectoryPage> {
 
   getUsersSnapShot() async {
     var data = await FirebaseFirestore.instance
-        .collection('users')
-        .orderBy("name")
+        .collection(USER_COLLECTION)
+        .orderBy(NAME)
         .get();
     setState(() {
       _allResults = data.docs;

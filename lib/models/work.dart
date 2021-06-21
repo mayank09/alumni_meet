@@ -1,3 +1,4 @@
+import 'package:alumnimeet/util/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,27 +16,27 @@ class Work {
   //create Work model object from fireStore document snapshot
   factory Work.fromSnapshot(DocumentSnapshot snapshot) {
     return Work(
-        snapshot['work']['org'],
-        snapshot['work']['city'],
-        snapshot['work']['job_title'],
-        DateFormat("MMMM y").format(snapshot['work']['from']!.toDate()),
-        snapshot['work']['isPresent']
+        snapshot[WORK][ORG],
+        snapshot[WORK][CITY],
+        snapshot[WORK][JOB_TITLE],
+        DateFormat(WORK_FORMAT).format(snapshot[WORK][FROM]!.toDate()),
+        snapshot[WORK][IS_PRESENT]
             ? null
-            : DateFormat("MMMM y").format(snapshot['work']['to'].toDate()),
-        snapshot['work']['isPresent'] ?? true);
+            : DateFormat(WORK_FORMAT).format(snapshot[WORK][TO].toDate()),
+        snapshot[WORK][IS_PRESENT] ?? true);
   }
 
   factory Work.fromAsyncSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
     return Work(
-        snapshot.data!['work']['org'],
-        snapshot.data!['work']['city'],
-        snapshot.data!['work']['job_title'],
-        DateFormat("MMMM y").format(snapshot.data!['work']['from']!.toDate()),
-        snapshot.data!['work']['isPresent']
+        snapshot.data![WORK][ORG],
+        snapshot.data![WORK][CITY],
+        snapshot.data![WORK][JOB_TITLE],
+        DateFormat(WORK_FORMAT).format(snapshot.data![WORK][FROM]!.toDate()),
+        snapshot.data![WORK][IS_PRESENT]
             ? null
-            : DateFormat("MMMM y")
-                .format(snapshot.data!['work']['to'].toDate()),
-        snapshot.data!['work']['isPresent'] ?? true);
+            : DateFormat(WORK_FORMAT)
+                .format(snapshot.data![WORK][TO].toDate()),
+        snapshot.data![WORK][IS_PRESENT] ?? true);
   }
 
    Map<String, dynamic> toJson() => {

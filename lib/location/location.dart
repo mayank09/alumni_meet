@@ -1,4 +1,5 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,8 +20,8 @@ Future<Position> determinePosition(BuildContext context, String uid) async {
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
-    showSnackBar(context, "Location services are disabled.");
-    return Future.error('Location services are disabled.');
+    showSnackBar(context, LOCATION_DISABLED);
+    return Future.error(LOCATION_DISABLED);
   }
 
   permission = await Geolocator.checkPermission();
@@ -32,17 +33,17 @@ Future<Position> determinePosition(BuildContext context, String uid) async {
       // Android's shouldShowRequestPermissionRationale
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
-      showSnackBar(context, "Location permissions are denied");
-      return Future.error('Location permissions are denied');
+      showSnackBar(context, LOCATION_PERMISSION_ERR);
+      return Future.error(LOCATION_PERMISSION_ERR);
     }
   }
 
   if (permission == LocationPermission.deniedForever) {
     // Permissions are denied forever, handle appropriately.
     showSnackBar(context,
-        "Location permissions are permanently denied, we cannot request permissions.");
+        LOCATION_PERMISSION_DENIED_ERR);
     return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
+        LOCATION_PERMISSION_DENIED_ERR);
   }
 
   // When we reach here, permissions are granted and we can
@@ -51,7 +52,7 @@ Future<Position> determinePosition(BuildContext context, String uid) async {
           desiredAccuracy: LocationAccuracy.best)
       .then((value) {
     FireStore.updateUserCurrentLocation(uid, value);
-    showSnackBar(context, "Current Location Updated Successfully");
+    showSnackBar(context, LOCATION_UPDATED_SUCCESS);
     return value;
   });
 }

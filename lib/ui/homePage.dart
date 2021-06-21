@@ -1,6 +1,8 @@
 import 'package:alumnimeet/firebase/fire_auth.dart' as FireAuth;
+import 'package:alumnimeet/ui/aboutus.dart';
 import 'package:alumnimeet/ui/alumniDirectory.dart';
 import 'package:alumnimeet/ui/userProfilePage.dart';
+import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,9 @@ class _HomePageState extends State<HomePage> {
 
   bool _isSigningOut = false;
 
+  int _currentIndex = 0;
+  late List<Widget> _children;
+
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
@@ -40,68 +45,106 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   void initState() {
     _currentUser = widget.user;
+    _children = [
+      UserProfilePage(userid: _currentUser.uid, isCurrentUser: true),
+      AlumniDirectoryPage(
+        user: _currentUser,
+      ),
+      AboutUsPage()
+    ];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text("Home"),
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.person), text: "My Profile"),
-                Tab(icon: Icon(Icons.contact_page), text: "Alumni Directory")
-              ],
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(HOME),
+/*          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.person), text: "My Profile"),
+              Tab(icon: Icon(Icons.contact_page), text: "Alumni Directory")
+            ],
+          ),*/
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: MY_PROFILE,
             ),
-          ),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.all(8),
-              children: [
-                UserAccountsDrawerHeader(
-                    accountName: Text(_currentUser.displayName.toString()),
-                    accountEmail: Text(_currentUser.email.toString()),
-                    currentAccountPicture: PhotoWidget(url: _currentUser.photoURL,name: _currentUser.displayName
-                    )),
-                ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings"),
-                    onTap: () {}),
-                ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text("Logout"),
-                    onTap: () async {
-                      //Navigator.pop(context);
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          LoginPage()), (Route<dynamic> route) => false);
-                      setState(() {
-                        _isSigningOut = true;
-                      });
-                      FireAuth.logout();
-                      setState(() {
-                        _isSigningOut = false;
-                      });
-                      /*Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      );*/
-                      Navigator.of(context)
-                          .pushReplacement(_routeToSignInScreen());
-                    })
-              ],
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.contact_page),
+              label: ALUM_DIR,
             ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.description),
+              label: ABT_US,
+            )
+          ],
+          currentIndex: _currentIndex,
+          onTap: _onItemTapped,
+          elevation: 5,
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.all(8),
+            children: [
+              UserAccountsDrawerHeader(
+                  accountName: Text(_currentUser.displayName.toString()),
+                  accountEmail: Text(_currentUser.email.toString()),
+                  currentAccountPicture: PhotoWidget(
+                      url: _currentUser.photoURL,
+                      name: _currentUser.displayName)),
+              ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text(SETTINGS),
+                  onTap: () {}),
+              ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text(LOGOUT),
+                  onTap: () async {
+                    //Navigator.pop(context);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (Route<dynamic> route) => false);
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+                    FireAuth.logout();
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    /*Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );*/
+                    Navigator.of(context)
+                        .pushReplacement(_routeToSignInScreen());
+                  })
+            ],
           ),
-          body: _isSigningOut
-              ? CircularProgressIndicator()
-              : TabBarView(
-                  children: [UserProfilePage(userid: _currentUser.uid, isCurrentUser: true), AlumniDirectoryPage(user: _currentUser,)])),
-    );
+        ),
+        body: _isSigningOut
+            ? CircularProgressIndicator()
+            : _children[_currentIndex]
+/*          TabBarView(children: [
+                UserProfilePage(
+                    userid: _currentUser.uid, isCurrentUser: true),
+                AlumniDirectoryPage(
+                  user: _currentUser,
+                )
+              ])*/
+        );
   }
 }
