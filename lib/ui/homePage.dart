@@ -113,24 +113,24 @@ class _HomePageState extends State<HomePage> {
                   leading: Icon(Icons.logout),
                   title: Text(LOGOUT),
                   onTap: () async {
-                    //Navigator.pop(context);
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (Route<dynamic> route) => false);
+                    Navigator.pop(context);
                     setState(() {
                       _isSigningOut = true;
                     });
-                    FireAuth.logout();
+                    await FireAuth.logout(_currentUser);
                     setState(() {
                       _isSigningOut = false;
                     });
+                    Navigator.of(context)
+                        .pushReplacement(_routeToSignInScreen());
                     /*Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => LoginPage(),
                       ),
                     );*/
-                    Navigator.of(context)
-                        .pushReplacement(_routeToSignInScreen());
+                    /*Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (Route<dynamic> route) => false);*/
                   })
             ],
           ),

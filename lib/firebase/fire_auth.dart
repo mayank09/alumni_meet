@@ -91,7 +91,12 @@ Future<User?> refreshUser(User user) async {
   return refreshedUser;
 }
 
-Future<void> logout() async {
+Future<void> logout(User user) async {
+  String authType = user.providerData[0].providerId;
+  if (authType.contains("google")) {
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+  }
   await FirebaseAuth.instance.signOut();
 }
 
@@ -125,8 +130,7 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == ACCOUNT_EXISTS_ERR) {
-        showSnackBar(
-            context, ACCOUNT_EXISTS_MSG);
+        showSnackBar(context, ACCOUNT_EXISTS_MSG);
         // handle the error here
       } else if (e.code == INVALID_CRED_ERR) {
         showSnackBar(context, INVALID_CRED_MSG);

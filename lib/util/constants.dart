@@ -1,4 +1,3 @@
-
 //Firebase FireStore
 const String USER_COLLECTION = 'users';
 //User Fields
@@ -28,7 +27,6 @@ const String JOB_TITLE = 'job_title';
 const String BIRTHDAY_FORMAT = 'dd-MM-yyyy';
 const String WORK_FORMAT = 'MMMM y';
 
-
 //Firebase Auth
 //server errors
 const String WEAK_PASSWORD_ERR = 'weak-password';
@@ -43,7 +41,8 @@ const String WEAK_PASSWORD_MSG = "The password provided is too weak.";
 const String EMAIL_IN_USE_MSG = "An account already exists for that email.";
 const String USER_NOT_FOUND_MSG = "No user found for that email.";
 const String PASSWORD_MSG = 'Wrong password provided.';
-const String ACCOUNT_EXISTS_MSG = 'Account already exists with a different credential';
+const String ACCOUNT_EXISTS_MSG =
+    'Account already exists with a different credential';
 const String INVALID_CRED_MSG = 'Invalid credential';
 
 //UI Strings
@@ -101,6 +100,7 @@ const String DONT_HAVE_ACC = 'Don\'t have an account ?';
 //Register
 const String REGISTER = 'Register';
 const String ALREADY_HAVE_ACC = 'Don\'t have an account ?';
+
 //Form Validation errors
 const String NAME_ERR = 'Please enter your full name"';
 const String EMAIL_ERR = 'Email address can\'t be left blank';
@@ -115,15 +115,27 @@ const String COMPLETE_DATE_ERR = 'Please fill a Completion date';
 const String DOB_ERR = 'Please fill Date of Birth';
 const String HT_ERR = 'Please enter your hometown';
 const String PASS_ERR = 'Password can\'t be left blank';
+const String PHONE_ERR = 'Mobile Number can\'t be blank';
+const String PHONE_VALID_ERR = 'Please enter a valid Mobile Number';
+const String LOCATION_ERR = 'No Location found for this user';
 
 //MAP
 const String MAP_TITLE = 'View Location on Map';
 const String DONE = 'Done';
 const String ADDRESS = 'Address';
 
+//widget
+const String APP_NAME = 'Alumni Meet';
+const String OR = 'OR';
+const String SIGN_IN_GOOGLE = 'Sign-In with Google';
+const String PHONE_NUM = 'Mobile Number';
+const String PHONE_HINT = '9876598765';
+const String SET_LOCATION = 'Set Location';
+const String VIEW_ON_MAP = 'View on Map';
+
 //Location
 const String LOCATION_DISABLED = "Location services are disabled.";
 const String LOCATION_PERMISSION_ERR = "Location permissions are denied";
-const String LOCATION_PERMISSION_DENIED_ERR = "Location permissions are permanently denied, we cannot request permissions.";
+const String LOCATION_PERMISSION_DENIED_ERR =
+    "Location permissions are permanently denied, we cannot request permissions.";
 const String LOCATION_UPDATED_SUCCESS = "Current Location Updated Successfully";
-

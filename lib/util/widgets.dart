@@ -246,7 +246,7 @@ class AppLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 60),
-      child: Text("Alumni Meet",
+      child: Text(APP_NAME,
           style: TextStyle(
             fontSize: 50,
             color: Colors.blueAccent,
@@ -314,7 +314,7 @@ class MyDivider extends StatelessWidget {
               child: Divider(thickness: 1),
             ),
           ),
-          Text('OR'),
+          Text(OR),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -352,7 +352,7 @@ class GoogleButton extends StatelessWidget {
               minimumSize: Size(double.infinity, 50)),
           onPressed: onPressed,
           icon: FaIcon(FontAwesomeIcons.google, color: Colors.blue),
-          label: Text("Sign-In with Google")),
+          label: Text(SIGN_IN_GOOGLE)),
     );
   }
 }
@@ -379,8 +379,8 @@ class PhoneNumberField extends StatelessWidget {
         child: FormBuilderPhoneField(
           name: name,
           decoration: const InputDecoration(
-              labelText: 'Mobile Number',
-              hintText: '9876598765',
+              labelText: PHONE_NUM,
+              hintText: PHONE_HINT,
               border: OutlineInputBorder()),
           priorityListByIsoCode: ['IN'],
           defaultSelectedCountryIsoCode: "IN",
@@ -393,9 +393,9 @@ class PhoneNumberField extends StatelessWidget {
           validator: FormBuilderValidators.compose(
             [
               FormBuilderValidators.required(context,
-                  errorText: "Mobile Number can't be blank"),
+                  errorText: PHONE_ERR),
               FormBuilderValidators.numeric(context,
-                  errorText: "Please enter a valid Mobile Number")
+                  errorText: PHONE_VALID_ERR)
             ],
           ),
         ));
@@ -424,7 +424,7 @@ class InkwellWithIconClickable extends StatelessWidget {
         onTap: (isClickable == true && title != null && title!.isNotEmpty)
             ? () {
                 iconData == Icons.email
-                    ? customLaunch('mailto: $title subject: Alumni Meet')
+                    ? customLaunch('mailto: $title subject: $APP_NAME')
                     : customLaunch('tel:$title');
               }
             : null,
@@ -613,7 +613,7 @@ class ProfessionalDetails extends StatelessWidget {
                                 vertical: 4.0, horizontal: 4),
                             child: start != null
                                 ? isPresent
-                                    ? Text('$start -Present')
+                                    ? Text('$start -$PRESENT_LABEL')
                                     : Text('$start -$complete')
                                 : Text(""))
                       ],
@@ -690,7 +690,7 @@ class PersonalDetails extends StatelessWidget {
                               onPressed: () {
                                 determinePosition(context, userId);
                               },
-                              child: Text("Set Location",
+                              child: Text(SET_LOCATION,
                                   style: TextStyle(color: Colors.blue)))
                           : TextButton(
                               onPressed: () {
@@ -704,9 +704,9 @@ class PersonalDetails extends StatelessWidget {
                                                   lat: lat!,
                                                 )))
                                     : showSnackBar(context,
-                                        "No Location found for this user");
+                                    LOCATION_ERR);
                               },
-                              child: Text("View on Map",
+                              child: Text(VIEW_ON_MAP,
                                   style: TextStyle(color: Colors.blue)))
                     ],
                   )
