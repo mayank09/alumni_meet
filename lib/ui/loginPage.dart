@@ -1,13 +1,15 @@
-import 'package:alumnimeet/firebase/fire_auth.dart'as FireAuth;
+import 'package:alumnimeet/firebase/fire_auth.dart' as FireAuth;
 import 'package:alumnimeet/ui/homePage.dart';
 import 'package:alumnimeet/ui/registerPage.dart';
 import 'package:alumnimeet/util/constants.dart';
+import 'package:alumnimeet/ui/language.dart';
 import 'package:alumnimeet/util/widgets.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode _passwordFocusNode = FocusNode();
 
   bool _isProcessing = false;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +43,18 @@ class _LoginPageState extends State<LoginPage> {
                               FormTextField(
                                   name: EMAIL_ID,
                                   hint: EMAIL_HINT,
-                                  label: EMAIL_ID.toUpperCase(),
+                                  label: Locales.string(context, 'email'),
                                   inputType: TextInputType.emailAddress,
                                   focusNode: _emailFocusNode,
                                   validators: [
                                     FormBuilderValidators.required(context,
-                                        errorText:
-                                        EMAIL_ERR),
+                                        errorText: EMAIL_ERR),
                                     FormBuilderValidators.email(context,
                                         errorText: EMAIL_VALID_ERR),
                                   ]),
                               FormTextField(
                                   name: PASS_FIELD,
-                                  label: PASS_FIELD.toUpperCase(),
+                                  label: Locales.string(context, 'password'),
                                   inputType: TextInputType.text,
                                   textInputAction: TextInputAction.done,
                                   focusNode: _passwordFocusNode,
@@ -69,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                                   : Column(
                                       children: [
                                         SubmitButton(
-                                            title: LOGIN,
+                                            title: Locales.string(context, 'login'),
                                             onPressed: () async {
                                               FocusScope.of(context).unfocus();
                                               if (_formKey.currentState!
@@ -80,8 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                                                 _formKey.currentState!.save();
                                                 print(_formKey
                                                     .currentState!.value);
-                                                User? user =
-                                                    await FireAuth.signInUsingEmailPassword(
+                                                User? user = await FireAuth
+                                                    .signInUsingEmailPassword(
                                                         email: _formKey
                                                             .currentState!
                                                             .fields[EMAIL_ID]!
@@ -114,8 +113,9 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               _isProcessing = true;
                                             });
-                                            User? user = await FireAuth.signInWithGoogle(
-                                                context: context);
+                                            User? user =
+                                                await FireAuth.signInWithGoogle(
+                                                    context: context);
 
                                             setState(() {
                                               _isProcessing = false;
@@ -135,9 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                                           },
                                         ),
                                         CreateAccountLabel(
-                                            question:
-                                            DONT_HAVE_ACC,
-                                            feature: REGISTER,
+                                            question: Locales.string(context, 'DONT_HAVE_ACC'),
+                                            feature: Locales.string(context, 'REGISTER'),
                                             onTap: () {
                                               Navigator.push(
                                                 context,
@@ -150,6 +149,22 @@ class _LoginPageState extends State<LoginPage> {
                                     )
                             ],
                           )),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 16, bottom: 8),
+                          child: FloatingActionButton(
+                              backgroundColor: Colors.blue,
+                              child: Icon(
+                                Icons.language_outlined,
+                              ),
+                              onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => LanguagePage()),
+                                  )),
+                        ),
+                      ),
                     ],
                   ),
                 );

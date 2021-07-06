@@ -51,9 +51,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            Text(
-                "Alumni Meet helps simplify and encourage alumni engagement activities, thereby leveraging the power of alumni relationships. It is the easiest way to connect with classmates and peers wherever we are in the world.Empowering alumni to not only connect with each other, but also back with the university is one of the most important functions of an alumni association. Because alumni hold shared experiences as students of their school, this lends itself to powerful networking opportunities; whether it’s in the form of class reunions or volunteer events. Even in their local communities, alumni can form affinity networks to pursue common interests with their peers.",
-                textAlign: TextAlign.justify),
+            Text(ABOUT_APP, textAlign: TextAlign.justify),
             Padding(
               padding: const EdgeInsets.only(top: 40.0),
               child: Container(

@@ -1,0 +1,10 @@
+{
+  "language": "Language",
+  "email" : "Email",
+  "password" : "Password",
+  "login" : "Login",
+  "or" : "OR",
+  "SIGN_IN_GOOGLE": "Sign-In with Google",
+  "DONT_HAVE_ACC": "Don't have an account?",
+  "REGISTER": "Register"
+}

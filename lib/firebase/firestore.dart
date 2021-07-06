@@ -6,7 +6,7 @@ import 'package:geolocator/geolocator.dart';
 
 Future<void> addUserToCollection(
   User? user,
-  phoneNumber,
+  String? phoneNumber,
 ) async {
   //now below I am getting an instance of firebase firestore then getting the user collection
   //now I am creating the document if not already exist and setting the data.

@@ -6,7 +6,9 @@ import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
+import 'language.dart';
 import 'loginPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -109,6 +111,16 @@ class _HomePageState extends State<HomePage> {
                   leading: Icon(Icons.settings),
                   title: Text(SETTINGS),
                   onTap: () {}),
+              ListTile(
+                  leading: Icon(Icons.language_outlined),
+                  title: LocaleText('language'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => LanguagePage()),
+                    );
+                  }),
               ListTile(
                   leading: Icon(Icons.logout),
                   title: Text(LOGOUT),

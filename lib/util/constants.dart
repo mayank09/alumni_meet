@@ -51,6 +51,7 @@ const String VER = 'Version: ';
 const String CONTACT_US = 'Contact Us:';
 const String ADMIN_EMAIL = 'mayank.tripathi@tarento.com';
 const String ADMIN_PHONE = '+918373941947';
+const String ABOUT_APP = "Alumni Meet helps simplify and encourage alumni engagement activities, thereby leveraging the power of alumni relationships. It is the easiest way to connect with classmates and peers wherever we are in the world.Empowering alumni to not only connect with each other, but also back with the university is one of the most important functions of an alumni association. Because alumni hold shared experiences as students of their school, this lends itself to powerful networking opportunities; whether it’s in the form of class reunions or volunteer events. Even in their local communities, alumni can form affinity networks to pursue common interests with their peers.";
 
 //ContactInfo
 const String CONTACT_INFO = 'Contact Info';
@@ -102,7 +103,7 @@ const String REGISTER = 'Register';
 const String ALREADY_HAVE_ACC = 'Don\'t have an account ?';
 
 //Form Validation errors
-const String NAME_ERR = 'Please enter your full name"';
+const String NAME_ERR = 'Please enter your full name';
 const String EMAIL_ERR = 'Email address can\'t be left blank';
 const String EMAIL_VALID_ERR = 'Not a valid Email';
 const String LINK_VALID_ERR = 'Please enter a valid url';
@@ -128,6 +129,7 @@ const String ADDRESS = 'Address';
 const String APP_NAME = 'Alumni Meet';
 const String OR = 'OR';
 const String SIGN_IN_GOOGLE = 'Sign-In with Google';
+const String GOOGLE = 'google';
 const String PHONE_NUM = 'Mobile Number';
 const String PHONE_HINT = '9876598765';
 const String SET_LOCATION = 'Set Location';

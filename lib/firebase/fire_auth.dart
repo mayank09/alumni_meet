@@ -93,7 +93,7 @@ Future<User?> refreshUser(User user) async {
 
 Future<void> logout(User user) async {
   String authType = user.providerData[0].providerId;
-  if (authType.contains("google")) {
+  if (authType.contains(GOOGLE)) {
     GoogleSignIn googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
   }
@@ -125,7 +125,7 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         if ((user != null)) {
-          addUserToCollection(user, user?.phoneNumber);
+          addUserToCollection(user, user.phoneNumber);
         }
       }
     } on FirebaseAuthException catch (e) {

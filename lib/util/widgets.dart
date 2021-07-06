@@ -8,6 +8,7 @@ import 'package:alumnimeet/util/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_phone_field/form_builder_phone_field.dart';
 import 'package:intl/intl.dart';
@@ -314,7 +315,7 @@ class MyDivider extends StatelessWidget {
               child: Divider(thickness: 1),
             ),
           ),
-          Text(OR),
+          LocaleText('or'),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -352,7 +353,7 @@ class GoogleButton extends StatelessWidget {
               minimumSize: Size(double.infinity, 50)),
           onPressed: onPressed,
           icon: FaIcon(FontAwesomeIcons.google, color: Colors.blue),
-          label: Text(SIGN_IN_GOOGLE)),
+          label: LocaleText('SIGN_IN_GOOGLE')),
     );
   }
 }
@@ -509,15 +510,17 @@ class ProfileHeaderCard extends StatelessWidget {
                   url != null
                       ? Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                  child: Text(url!,
-                                      style: TextStyle(color: Colors.blue),
-                                      overflow: TextOverflow.ellipsis),
-                                  onTap: () {
-                                    customLaunch(url);
-                                  }),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                    child: Text(url!,
+                                        style: TextStyle(color: Colors.blue),
+                                        overflow: TextOverflow.ellipsis),
+                                    onTap: () {
+                                      customLaunch(url);
+                                    }),
+                              ),
                             )
                           ],
                         )
