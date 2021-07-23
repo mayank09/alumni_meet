@@ -44,7 +44,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     return new Text('Error: ${snapshot.error}');
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return new Text('Loading...');
+                      return Container(child: new Center(child: CircularProgressIndicator()));
                     default:
                       User user = User.fromAsyncDocumentSnapShot(snapshot);
                       return Column(

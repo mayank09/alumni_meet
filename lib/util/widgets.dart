@@ -2,6 +2,7 @@ import 'package:alumnimeet/location/location.dart';
 import 'package:alumnimeet/ui/contactInfoForm.dart';
 import 'package:alumnimeet/ui/mapPage.dart';
 import 'package:alumnimeet/ui/personalInfoForm.dart';
+import 'package:alumnimeet/ui/viewOnMap.dart';
 import 'package:alumnimeet/ui/workInfoForm.dart';
 import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/utils.dart';
@@ -393,10 +394,8 @@ class PhoneNumberField extends StatelessWidget {
               : TextInputAction.next,
           validator: FormBuilderValidators.compose(
             [
-              FormBuilderValidators.required(context,
-                  errorText: PHONE_ERR),
-              FormBuilderValidators.numeric(context,
-                  errorText: PHONE_VALID_ERR)
+              FormBuilderValidators.required(context, errorText: PHONE_ERR),
+              FormBuilderValidators.numeric(context, errorText: PHONE_VALID_ERR)
             ],
           ),
         ));
@@ -691,23 +690,40 @@ class PersonalDetails extends StatelessWidget {
                       isCurrentUser == true
                           ? TextButton(
                               onPressed: () {
-                                determinePosition(context, userId);
+                                //determinePosition(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewOnMap(
+                                              userId: userId,
+                                              lat: lat,
+                                              lng:lng,
+                                              isCurrentUser: isCurrentUser,
+                                            )));
                               },
                               child: Text(SET_LOCATION,
                                   style: TextStyle(color: Colors.blue)))
                           : TextButton(
                               onPressed: () {
                                 lat != null && lng != null
-                                    ? Navigator.push(
+                                    ? /*Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => MapPage(
                                                   userId: userId,
                                                   lng: lng!,
                                                   lat: lat!,
+                                                )))*/
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ViewOnMap(
+                                                  userId: userId,
+                                                  lat: lat!,
+                                                  lng: lng!,
+                                                  isCurrentUser: isCurrentUser,
                                                 )))
-                                    : showSnackBar(context,
-                                    LOCATION_ERR);
+                                    : showSnackBar(context, LOCATION_ERR);
                               },
                               child: Text(VIEW_ON_MAP,
                                   style: TextStyle(color: Colors.blue)))

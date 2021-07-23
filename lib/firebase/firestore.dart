@@ -62,10 +62,10 @@ updateContactAndPersonalInfo(String uid, Map<String, dynamic> valueMap) {
       .set(valueMap, SetOptions(merge: true));
 }
 
-updateUserCurrentLocation(String uid, Position position) {
+updateUserCurrentLocation(String uid, double lat,double lng ) {
   FirebaseFirestore.instance.collection(USER_COLLECTION).doc(uid).set({
-    LAT: position.latitude,
-    LNG: position.longitude,
+    LAT: lat,
+    LNG: lng,
   }, SetOptions(merge: true));
 }
 

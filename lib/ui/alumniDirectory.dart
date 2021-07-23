@@ -1,5 +1,6 @@
 import 'package:alumnimeet/firebase/firestore.dart' as FireStore;
 import 'package:alumnimeet/models/user.dart' as UserModel;
+import 'package:alumnimeet/ui/viewOnMap.dart';
 import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/customCard.dart';
 
@@ -116,6 +117,27 @@ class _AlumniDirectoryPageState extends State<AlumniDirectoryPage> {
                   })),
         ],
       )),
-    ));
+    ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewOnMap(
+                    userId: _currentUser.uid,
+                    isCurrentUser: false,
+                    isMultipleMarker: true,
+                    allUsers: _allResults,
+                  )
+              ));
+        },
+        label: const Text('Map View'),
+        icon: const Icon(Icons.map),
+        backgroundColor: Colors.lightBlueAccent,
+      ),
+
+    );
+
   }
 }

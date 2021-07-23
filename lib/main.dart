@@ -1,7 +1,7 @@
 import 'package:alumnimeet/ui/loginPage.dart';
+import 'package:alumnimeet/ui/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: Locales.delegates,
           supportedLocales: Locales.supportedLocales,
           locale: locale,
-          home: LoginPage());
+          home: SplashPage());
     });
   }
 }

@@ -9,7 +9,7 @@ import 'package:geocoding/geocoding.dart';
 ///
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
-Future<Position> determinePosition(BuildContext context, String uid) async {
+Future<Position> determinePosition(BuildContext context) async {
   bool serviceEnabled;
   LocationPermission permission;
 
@@ -51,8 +51,8 @@ Future<Position> determinePosition(BuildContext context, String uid) async {
   return await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.best)
       .then((value) {
-    FireStore.updateUserCurrentLocation(uid, value);
-    showSnackBar(context, LOCATION_UPDATED_SUCCESS);
+    //FireStore.updateUserCurrentLocation(uid, value);
+    //showSnackBar(context, LOCATION_UPDATED_SUCCESS);
     return value;
   });
 }

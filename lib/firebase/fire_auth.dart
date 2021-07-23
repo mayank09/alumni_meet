@@ -1,5 +1,6 @@
 import 'package:alumnimeet/firebase/firestore.dart';
 import 'package:alumnimeet/ui/homePage.dart';
+import 'package:alumnimeet/ui/loginPage.dart';
 import 'package:alumnimeet/util/constants.dart';
 import 'package:alumnimeet/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +19,12 @@ Future<FirebaseApp> initializeFirebase(BuildContext context) async {
         builder: (context) => HomePage(
           user: user,
         ),
+      ),
+    );
+  }else{
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => LoginPage()
       ),
     );
   }
